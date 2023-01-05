@@ -20,12 +20,30 @@ class _UserTransectionState extends State<UserTransection> {
       amount: 550.0,
       date: DateTime.now(),
     ),
-    // Transection(
-    //   id: "t2",
-    //   title: "Watch",
-    //   amount: 5000.0,
-    //   date: DateTime.now(),
-    // ),
+    Transection(
+      id: "t2",
+      title: "Watch",
+      amount: 5000.0,
+      date: DateTime.now(),
+    ),
+    Transection(
+      id: "t2",
+      title: "bike",
+      amount: 2000.0,
+      date: DateTime.now(),
+    ),
+    Transection(
+      id: "t2",
+      title: "book",
+      amount: 300.0,
+      date: DateTime.now(),
+    ),
+    Transection(
+      id: "t2",
+      title: "travel",
+      amount: 50000.0,
+      date: DateTime.now(),
+    ),
   ];
 
   void _addNewTransection(String txtitle, double txamount) {
@@ -35,9 +53,9 @@ class _UserTransectionState extends State<UserTransection> {
         date: DateTime.now(),
         id: DateTime.now().toString());
 
-    setState() {
+    setState(() {
       _usertransection.add(newTx);
-    }
+    });
   }
 
   @override

@@ -25,6 +25,7 @@ class NewTransection extends StatelessWidget {
               //   titleInput = value;
               // },
               controller: titleController,
+              keyboardType: TextInputType.number,
             ),
             TextField(
               decoration: InputDecoration(

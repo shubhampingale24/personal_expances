@@ -31,20 +31,22 @@ class MyApp extends StatelessWidget {
       appBar: AppBar(
         title: Text("Expence App"),
       ),
-      body: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.amberAccent,
-                child: Text("chart"),
-                elevation: 5,
+      body: SingleChildScrollView(
+        child: Column(
+            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: double.infinity,
+                child: Card(
+                  color: Colors.amberAccent,
+                  child: Text("chart"),
+                  elevation: 5,
+                ),
               ),
-            ),
-            UserTransection()
-          ]),
+              UserTransection()
+            ]),
+      ),
     );
   }
 }
