@@ -2,12 +2,35 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 
-class NewTransection extends StatelessWidget {
+class NewTransection extends StatefulWidget {
   // const NewTransection({super.key});
   final Function addTx;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+
   NewTransection(this.addTx);
+
+  @override
+  State<NewTransection> createState() => _NewTransectionState();
+}
+
+class _NewTransectionState extends State<NewTransection> {
+  final titleController = TextEditingController();
+
+  final amountController = TextEditingController();
+
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
+      return;
+    }
+    widget.addTx(
+      enteredTitle,
+      enteredAmount,
+    );
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,26 +44,16 @@ class NewTransection extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Title',
               ),
-              // onChanged: (value) {
-              //   titleInput = value;
-              // },
               controller: titleController,
-              keyboardType: TextInputType.number,
             ),
             TextField(
-              decoration: InputDecoration(
-                labelText: 'Amount',
-              ),
-              // onChanged: (value) {
-              //   amountInput = value;
-              // },
+              decoration: InputDecoration(labelText: 'Amount'),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => submitData,
             ),
             TextButton(
-              onPressed: () {
-                addTx(
-                    titleController.text, double.parse(amountController.text));
-              },
+              onPressed: submitData,
               child: Text(
                 "Add Transection",
                 style: TextStyle(color: Colors.purple),
