@@ -1,6 +1,7 @@
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransection extends StatefulWidget {
   // const NewTransection({super.key});
@@ -13,22 +14,40 @@ class NewTransection extends StatefulWidget {
 }
 
 class _NewTransectionState extends State<NewTransection> {
-  final titleController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime _selectDate = DateTime.now();
 
-  final amountController = TextEditingController();
-
-  void submitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.parse(amountController.text);
-
+  void _submitData() {
+    if (_amountController.text.isEmpty) {
+      return;
+    }
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.parse(_amountController.text);
+    final selectedDate = _selectDate;
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
-    widget.addTx(
-      enteredTitle,
-      enteredAmount,
-    );
+    print(selectedDate);
+    widget.addTx(enteredTitle, enteredAmount, selectedDate);
     Navigator.of(context).pop();
+  }
+
+  void _getDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    ).then((PickedDate) {
+      if (PickedDate == null) {
+        return;
+      }
+      // print("$PickedDate");
+      setState(() {
+        _selectDate = PickedDate;
+      });
+    });
   }
 
   @override
@@ -44,19 +63,40 @@ class _NewTransectionState extends State<NewTransection> {
               decoration: InputDecoration(
                 labelText: 'Title',
               ),
-              controller: titleController,
+              controller: _titleController,
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
-              controller: amountController,
+              controller: _amountController,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData,
+              onSubmitted: (_) => _submitData,
             ),
-            TextButton(
-              onPressed: submitData,
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(_selectDate == null
+                          ? "No Date Choosen!"
+                          : "Picked Date : ${DateFormat.yMMMd().format(_selectDate)}"
+                      // style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                      ),
+                ),
+                TextButton(
+                  onPressed: _getDatePicker,
+                  child: Text(
+                    "Choose date",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                )
+              ],
+            ),
+            ElevatedButton(
+              onPressed: _submitData,
               child: Text(
                 "Add Transection",
-                style: TextStyle(color: Colors.purple),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],

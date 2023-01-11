@@ -46,36 +46,36 @@ class _MyAppState extends State<MyApp> {
   // const MyApp({super.key});
 
   final List<Transection> _usertransection = [
-    Transection(
-      id: "t1",
-      title: "Shoe",
-      amount: 550.0,
-      date: DateTime.now(),
-    ),
-    Transection(
-      id: "t2",
-      title: "Watch",
-      amount: 5000.0,
-      date: DateTime.now(),
-    ),
-    Transection(
-      id: "t2",
-      title: "bike",
-      amount: 2000.0,
-      date: DateTime.now(),
-    ),
-    Transection(
-      id: "t2",
-      title: "book",
-      amount: 300.0,
-      date: DateTime.now(),
-    ),
-    Transection(
-      id: "t2",
-      title: "travel",
-      amount: 50000.0,
-      date: DateTime.now(),
-    ),
+    // Transection(
+    //   id: "t1",
+    //   title: "Shoe",
+    //   amount: 550.0,
+    //   date: DateTime.now(),
+    // ),
+    // Transection(
+    //   id: "t2",
+    //   title: "Watch",
+    //   amount: 5000.0,
+    //   date: DateTime.now(),
+    // ),
+    // Transection(
+    //   id: "t2",
+    //   title: "bike",
+    //   amount: 2000.0,
+    //   date: DateTime.now(),
+    // ),
+    // Transection(
+    //   id: "t2",
+    //   title: "book",
+    //   amount: 300.0,
+    //   date: DateTime.now(),
+    // ),
+    // Transection(
+    //   id: "t2",
+    //   title: "travel",
+    //   amount: 50000.0,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   List<Transection> get _recentTransection {
@@ -88,11 +88,12 @@ class _MyAppState extends State<MyApp> {
     }).toList();
   }
 
-  void _addNewTransection(String txtitle, double txamount) {
-    final newTx = Transection(
+  void _addNewTransection(String txtitle, double txamount, DateTime txDate) {
+    // print("Todays date : $Txdate");
+    var newTx = Transection(
         title: txtitle,
         amount: txamount,
-        date: DateTime.now(),
+        date: txDate,
         id: DateTime.now().toString());
 
     setState(() {
@@ -110,6 +111,12 @@ class _MyAppState extends State<MyApp> {
             behavior: HitTestBehavior.opaque,
           );
         });
+  }
+
+  void _deleteTransection(String id) {
+    setState(() {
+      _usertransection.removeWhere((tx) => tx.id == id);
+    });
   }
 
   @override
@@ -130,7 +137,7 @@ class _MyAppState extends State<MyApp> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Chart(_recentTransection),
-              TransectionList(_usertransection)
+              TransectionList(_usertransection, _deleteTransection)
             ]),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -6,7 +6,8 @@ import '../models/transection.dart';
 
 class TransectionList extends StatelessWidget {
   final List<Transection> transection;
-  TransectionList(this.transection);
+  final Function deleteTx;
+  TransectionList(this.transection, this.deleteTx);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,61 +27,42 @@ class TransectionList extends StatelessWidget {
                 ),
               ],
             )
-          : ListView(
-              children: transection.map(((tx) {
+          : ListView.builder(
+              itemBuilder: (ctx, index) {
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        // color: Colors.purple,
-                        padding: EdgeInsets.all(25),
-                        margin:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.purple, width: 3),
-                          // borderRadius: BorderRadius. circular(50),
-                          // color: Colors.purple,
-                        ),
-
-                        child: Text(
-                          ("\$ ${tx.amount}").toString(),
-                          style: TextStyle(
-                              color: Colors.purple,
-                              fontSize: 18,
-                              // backgroundColor: Colors.purple,
-                              fontWeight: FontWeight.bold),
-                        ),
+                  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 8),
+                  elevation: 7.0,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: FittedBox(
+                            child: Text(
+                          '\$ ${transection[index].amount}',
+                          style: TextStyle(fontWeight: FontWeight.w400),
+                        )),
                       ),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        flex: 2,
-                        child: Container(
-                          padding: EdgeInsets.only(top: 10, bottom: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                tx.title,
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                              Text(
-                                DateFormat().format(tx.date),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    // fontWeight: FontWeight.bold,
-                                    color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
+                    ),
+                    title: Text(
+                      transection[index].title,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "EricaOne",
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                        DateFormat.yMMMd().format(transection[index].date)),
+                    trailing: IconButton(
+                      icon: new Icon(Icons.delete),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => deleteTx(transection[index].id),
+                    ),
                   ),
                 );
-              })).toList(),
+              },
+              itemCount: transection.length,
             ),
     );
   }

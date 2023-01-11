@@ -11,6 +11,6 @@ class Transection {
     @required this.id = "1",
     @required this.title = "hello",
     @required this.amount = 0,
-    DateTime? date,
+    @required DateTime? date,
   }) : this.date = DateTime.now();
 }
