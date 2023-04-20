@@ -46,12 +46,12 @@ class _MyAppState extends State<MyApp> {
   // const MyApp({super.key});
 
   final List<Transection> _usertransection = [
-    Transection(
-      id: "t1",
-      title: "Shoe",
-      amount: 550.0,
-      date: DateTime.now(),
-    ),
+    //Transection(
+    //  id: "t1",
+     // title: "Shoe",
+     // amount: 550.0,
+     // date: DateTime.now(),
+    //),
     // Transection(
     //   id: "t2",
     //   title: "Watch",
